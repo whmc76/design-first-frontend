@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design-First Frontend"
+  short_description: "Imagegen-led frontend design-to-code workflow"
+  default_prompt: "Use $design-first-frontend to redesign this page with an imagegen mockup first, then implement and verify against it."
+
+policy:
+  allow_implicit_invocation: true

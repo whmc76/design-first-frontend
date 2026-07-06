@@ -2,6 +2,8 @@
 
 Skill-only Codex plugin for imagegen-led frontend redesigns and faithful mockup-to-code implementation.
 
+Author: Cyber Dick Lang ([whmc76](https://github.com/whmc76))
+
 ## What It Does
 
 - Requires a design artifact before implementation unless explicitly skipped.
@@ -12,16 +14,18 @@ Skill-only Codex plugin for imagegen-led frontend redesigns and faithful mockup-
 
 ## Install Locally
 
-This project is registered in the personal Codex marketplace at:
-
-```text
-C:\Users\28687\.agents\plugins\marketplace.json
-```
-
-Install or refresh it with:
+Install from GitHub with Codex:
 
 ```powershell
-codex plugin add design-first-frontend@personal
+codex plugin add https://github.com/whmc76/design-first-frontend
+```
+
+For local development, clone this repository and install from the local plugin project:
+
+```powershell
+git clone https://github.com/whmc76/design-first-frontend.git
+cd design-first-frontend
+codex plugin add .
 ```
 
 Start a new Codex thread after installation so the skill list is refreshed.
@@ -35,6 +39,12 @@ skills/design-first-frontend
 ## Validate
 
 ```powershell
-python C:\Users\28687\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py C:\Users\28687\plugins\design-first-frontend
-python C:\Users\28687\.codex\skills\.system\skill-creator\scripts\quick_validate.py C:\Users\28687\plugins\design-first-frontend\skills\design-first-frontend
+python C:\Users\28687\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py .
+python C:\Users\28687\.codex\skills\.system\skill-creator\scripts\quick_validate.py .\skills\design-first-frontend
 ```
+
+## License
+
+MIT License. You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of this project, provided that the original copyright notice and permission notice are preserved.
+
+Copyright (c) 2026 Cyber Dick Lang

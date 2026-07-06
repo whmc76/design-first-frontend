@@ -3,14 +3,26 @@
   "version": "0.1.0",
   "description": "Skill-only Codex plugin for imagegen-led frontend design-to-code implementation.",
   "author": {
-    "name": "Local developer"
+    "name": "Cyber Dick Lang",
+    "email": "286878701@qq.com",
+    "url": "https://github.com/whmc76"
   },
+  "homepage": "https://github.com/whmc76/design-first-frontend",
+  "repository": "https://github.com/whmc76/design-first-frontend",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "skill",
+    "frontend",
+    "design-first",
+    "imagegen"
+  ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Design-First Frontend",
     "shortDescription": "Imagegen-led frontend mockup-to-code workflow.",
     "longDescription": "Design-First Frontend enforces a design artifact, implementation contract, parity ledger, module mapping, and screenshot/DOM verification before a frontend redesign is considered complete.",
-    "developerName": "Local developer",
+    "developerName": "Cyber Dick Lang",
     "category": "Productivity",
     "capabilities": [
       "Write"

@@ -45,6 +45,6 @@ python C:\Users\28687\.codex\skills\.system\skill-creator\scripts\quick_validate
 
 ## License
 
-MIT License. You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of this project, provided that the original copyright notice and permission notice are preserved.
+Apache License 2.0. Redistribution must preserve the license text and the attribution notices in `NOTICE`.
 
 Copyright (c) 2026 Cyber Dick Lang

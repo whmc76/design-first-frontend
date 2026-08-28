@@ -1,65 +1,121 @@
 # Browser Verification
 
-Use this reference before final response.
+Verify the real experience, not merely the compiled component. Scale the checks to the risk, but never omit the primary route, primary workflow, or scoped viewport behavior.
 
-## Required Checks
+## 1. Runtime Preflight
 
-- Compile/type/lint/test checks relevant to touched files.
-- Desktop screenshot at the target design width, commonly 1440-1600 wide.
-- Mobile screenshot or viewport check around 390x844 unless the page is desktop-only.
-- DOM checks for overflow and old structure removal.
-- Interaction check for at least the primary tab/button/input changed by the redesign.
-- Completed parity ledger: no FAIL, UNKNOWN, or unchecked rows before final.
+- Confirm the exact checkout/branch/commit and server/container serving the page.
+- Confirm route, product mode, authentication/session, data fixture or real representative record, and feature flags.
+- Reload or restart enough of the runtime to rule out stale HMR, cache, or bind-mount output.
+- Capture console and network/runtime errors relevant to the flow.
 
-## Useful DOM Metrics
+## 2. Viewport and Spatial Checks
+
+- Capture the authoritative design viewport.
+- Check representative boundary widths immediately above and below layout transitions.
+- Verify mobile only when it is in product scope.
+- Record geometry for dominant and supporting regions, header/footer/sticky elements, scroll containers, and any overlay/portal.
+- Confirm no unintended horizontal overflow, clipping, overlap, hidden primary action, or unusably narrow text/media.
+- Expand/collapse/focus/resize panels and confirm the dominant object remains usable and the return path is clear.
+
+Example geometry probe:
 
 ```js
 (() => {
-  const rect = (selector) => {
-    const el = document.querySelector(selector);
-    if (!el) return null;
-    const r = el.getBoundingClientRect();
-    return { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) };
+  const box = (selector) => {
+    const element = document.querySelector(selector);
+    if (!element) return null;
+    const rect = element.getBoundingClientRect();
+    return { x: Math.round(rect.x), y: Math.round(rect.y), w: Math.round(rect.width), h: Math.round(rect.height) };
   };
   return {
-    viewport: { w: window.innerWidth, h: window.innerHeight },
-    overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    scrollHeight: document.documentElement.scrollHeight,
-    keyModule: rect('[data-or-class-for-key-module]'),
-    oldSelectorCount: document.querySelectorAll('[old-selector]').length,
-    requiredIconCount: document.querySelectorAll('[required-icon-selector]').length,
-    requiredControlCount: document.querySelectorAll('[required-control-selector]').length,
+    viewport: { w: innerWidth, h: innerHeight },
+    documentOverflowX: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    primary: box('[data-primary-work]'),
+    supporting: box('[data-supporting-panel]'),
+    oldStructureCount: document.querySelectorAll('[data-old-structure]').length,
+    modalCount: document.querySelectorAll('[aria-modal="true"]').length,
   };
 })()
 ```
 
-## Common False Positives
+Use actual project selectors; placeholder selectors are not evidence.
 
-- Screenshot captured Suspense/loading state.
-- Browser served stale build or wrong port.
-- Route redirects to a different tab or default mode.
-- HMR updated CSS but not component tree.
-- `file://` preview failed to load module scripts.
-- Mobile page is scrollable only inside an app shell; verify the actual scroll container.
+## 3. State and Content Matrix
 
-## Visual Comparison Checklist
+Exercise the relevant states with real or repository-approved representative data:
 
-- Same macro layout as design: shell, columns, major module order.
-- Same information architecture: no old grid/list/card remains where design replaced it.
-- Same density: primary workflow visible in intended viewport.
-- Same visual language: border/radius/surface/title/chip/button styles are shared.
-- Same interaction state: selected tabs, previews, default mode, and empty/loading states make sense.
-- No horizontal overflow, clipped right column, or unreachable mobile controls.
-- Every parity ledger row has evidence. Do not close on "visually close" without a selector, screenshot, metric, interaction result, or API/database result.
+- Initial/first entry.
+- Loading/generating and progressive/partial state.
+- Typical populated state.
+- Maximum/long text and dense content.
+- Empty/no-results and media failure.
+- Validation, dependency, network, or task failure.
+- Success/completed, canceled, stale/restored, and alternate tabs/modes.
 
-## User-Complaint Simulation
+Confirm the hierarchy, actions, scroll, and content access remain coherent in each. Do not replace unavailable real states with invented business content.
 
-Before final, write and answer five likely objections:
+## 4. Interaction and Lifecycle
 
-- "This module still has the old structure."
-- "The design showed icons/checkboxes/previews but the implementation uses text/cards."
-- "This button looks real but does nothing."
-- "The first viewport still wastes space or hides the main workflow."
-- "The page is using fake/mock data instead of generated or persisted data."
+- Exercise every changed primary control and representative secondary controls.
+- Verify default, hover, pressed, selected, disabled, loading, and error behavior where applicable.
+- Verify keyboard entry/order/activation, visible focus, focus containment only for real modals, and focus return after transient UI closes.
+- Verify route/back/refresh/restoration behavior and persistence when the workflow requires it.
+- For background work, explicitly test collapse/tab switch/unmount/restoration followed by completion, failure, and real cancel. Presentation changes must not swallow lifecycle events.
+- Confirm fake, obsolete, and superseded controls/routes/selectors are absent.
 
-If any answer is weak, continue implementation or label the residual risk explicitly.
+## 5. Motion and Accessibility
+
+- Observe important transitions at normal speed and during rapid reversal/repeated input.
+- Confirm input is not blocked unnecessarily and the final state never depends on animation completion.
+- Emulate `prefers-reduced-motion: reduce` and verify state changes remain understandable.
+- Check semantic roles/names/states, contrast, status meaning beyond color, zoom/text scaling, and live announcements proportionate to the changed workflow.
+- Use automated accessibility tooling when available, but verify the changed interaction manually as well.
+
+## 6. Performance and Stability
+
+Gather proportionate evidence when the redesign adds or changes heavy media, animation, large lists, global state, canvas, or dependencies:
+
+- Repeated progress updates do not rerender or relayout the entire workspace unnecessarily.
+- Resize/scroll/drag/animation remains responsive under representative content.
+- Media uses appropriate thumbnail/full-resolution loading and does not create avoidable layout shift.
+- New dependency or chunk cost is understood; secondary heavy UI can be deferred without harming the primary job.
+- No maximum-update loops, leaked listeners, stale subscriptions, repeated requests, or console errors appear during the verified flow.
+
+Use existing project budgets when available. Do not invent universal thresholds solely to manufacture a PASS.
+
+## 7. Visual Comparison
+
+Compare implementation and artifact by region in this order:
+
+1. Shell, dominant object, columns, and first-viewport allocation.
+2. Module order, semantics, and state.
+3. Typography, content density, and reading widths.
+4. Surface, color, borders, depth, imagery, and icon treatment.
+5. Interaction states and motion continuity.
+
+Use image overlay/diff tooling when available, but interpret differences rather than optimizing a meaningless global pixel score. Dynamic content, browser font rendering, and documented feasibility/accessibility deviations may be legitimate.
+
+## 8. False Positives
+
+- Screenshot captured Suspense/loading rather than the intended state.
+- Wrong port, stale build, wrong route, redirect, default tab, feature flag, or user role.
+- CSS HMR updated while component or server state did not.
+- Browser zoom or OS scaling changed geometry.
+- Component preview passed while the shared shell still overrides it.
+- Mock handlers made controls appear functional.
+- Hidden old DOM still affects focus, accessibility, scroll, or lifecycle.
+
+## 9. Final Challenge
+
+Answer with evidence:
+
+- Does the new surface still visibly inherit an obsolete shell, card rhythm, or layout constraint?
+- Do real long content and dense states remain readable?
+- Do all visible actions work or truthfully explain unavailability?
+- Can the user understand progress, intervene, recover, and return without losing work?
+- Does panel focus/collapse/resize preserve the primary canvas?
+- Does motion clarify change without delaying work or harming reduced-motion users?
+- Did the redesign introduce avoidable rendering, media, dependency, or maintenance cost?
+
+If an answer is weak, continue or report the exact blocker and incomplete state.

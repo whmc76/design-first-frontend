@@ -1,134 +1,158 @@
 ---
 name: design-first-frontend
-description: Design-first frontend workflow for Codex imagegen-led page redesigns and faithful implementation. Use when the user asks to redesign, restyle, rebuild, or implement a frontend page/module from a generated design mockup, especially when they mention imagegen, design draft, matching the design, style consistency, module restyling, visual fidelity, screenshot verification, or complaints that the implementation still looks like the old page.
+description: Design and ship production frontend redesigns from an evidence-based visual and interaction contract. Use for page, workspace, shell, or module redesigns where aesthetic quality, spatial behavior, motion, real data/actions, implementation feasibility, and browser fidelity all matter. Also use when a screenshot implementation still feels like the old page or looks good but does not work.
 ---
 
 # Design-First Frontend
 
-Use this skill to turn a frontend redesign request into a controlled design-to-code workflow. The default standard is: generate or select a design image first, freeze the implementation contract, map every visible module to code, then verify with screenshots and DOM metrics before claiming completion.
+Turn a redesign request into a production experience, not a decorative mockup. The design contract includes layout, content behavior, interaction states, motion, data/actions, engineering constraints, and verification evidence. A beautiful image that cannot survive real content or be implemented faithfully is a failed design.
 
-The point is to reduce the user's manual QA. If the user has to point out obvious module-level mismatches one by one, the workflow has failed even if the final page eventually improves.
+The goal is to reduce the user's design and QA burden. The user should not have to discover obvious layout, state, control, responsiveness, or implementation mismatches one at a time.
+
+## Outcome Standard
+
+A successful result must be all of the following:
+
+- **Distinctive:** appropriate to the product and brand, with an intentional composition rather than a generic card grid.
+- **Legible:** clear hierarchy, useful density, readable long content, and an obvious primary job in the first viewport.
+- **Operable:** real actions work; loading, empty, long-content, error, terminal, disabled, focus, and selection states are coherent.
+- **Spatially stable:** panels negotiate available space; important content does not become unusably narrow, overlap, or disappear during resize and state changes.
+- **Performant and accessible:** motion, media, rendering, keyboard/focus, contrast, and reduced-motion behavior are proportionate to the product.
+- **Buildable:** the visual contract maps to real components, handlers, data sources, assets, and an affordable implementation strategy.
+- **Verified:** the actual route is exercised in a real browser and compared against the contract with screenshots, DOM geometry, interactions, and runtime evidence.
 
 ## Non-Negotiables
 
-- Do not start code implementation for a visual redesign until a design artifact exists, unless the user explicitly asks to skip imagegen.
-- Treat the design image as an implementation contract, not inspiration.
-- When the user supplies a design screenshot or mockup after an earlier generated design, the user-supplied artifact supersedes the generated one unless they explicitly say otherwise. Re-freeze the contract from the newest user artifact before editing.
-- Do not preserve old JSX/HTML structure when the design changes information architecture. Rewrite the module boundary that owns the old layout.
-- If the design artifact shows a different app shell, sidebar, topbar, or page chrome, that shell is part of the contract. Do not keep the old shell just because it is shared or convenient; create a scoped replacement for the redesigned route when changing the shared shell would be too broad.
-- If the user explicitly says an existing shell, sidebar, topbar, navigation, route wrapper, or shared chrome must stay unchanged, that instruction overrides the screenshot shell. Freeze the redesign contract around the page content area only, and verify the preserved shell was not modified.
-- Match the generated or supplied screenshot at the macro-layout level before tuning colors: sidebar width/order, topbar height/actions, first-viewport module positions, column widths, card heights, and visible text density must all be checked against the artifact.
-- Preserve design semantics. A table in the artifact must be implemented as a table-like structure, a timeline as a timeline, a right rail as a right rail, and top filters as top filters; replacing these with generic cards is a mismatch even if the labels are present.
-- Do not let live data destroy the design density. Clamp or summarize long records in cards, matrices, tables, and timelines so the rendered page keeps the same rhythm as the design while preserving access to the underlying data elsewhere.
-- Do not use mock records, invented controls, or placeholder domain data to make a business page appear complete. If the real page has no persisted data on first entry, implement the data lifecycle: explicit generating/loading state, generation from real inputs, persistence to the owning table/API, subsequent reads from that table/API, and a manual refresh action that regenerates and updates the stored record.
-- Do not call the work complete from typecheck/build alone. Capture real browser screenshots and inspect for visual drift, overflow, and old-module residue.
-- Before coding, create a parity ledger for every visible module and control in the design: layout role, visual control shape, icon/media requirement, data source, implementation owner, and DOM verification selector. Do not rely on memory of the mockup.
-- A design element that appears in the mockup but is missing from the parity ledger is a missed requirement. This includes small controls such as checkboxes, platform icons, relation icons, upload affordances, selected states, empty states, and helper labels.
-- A parity item can only be marked PASS with evidence: DOM selector/count, screenshot region, rendered text, style metric, or interaction result. "Looks close" is not evidence.
-- Do not final while any parity ledger row is FAIL, UNKNOWN, or NOT CHECKED unless you explicitly label the work incomplete and explain the blocker.
-- If the user says "it still looks the same", assume the wrong layer was changed. Find the first bad boundary: design structure, component tree, style cascade, data contract, route, or rendered DOM.
+- Inspect the existing route in a browser and inspect its owning code before proposing a redesign. A screenshot alone does not reveal real states, content extremes, handlers, or shared-shell constraints.
+- Create a design artifact before broad implementation. It may be a supplied mockup, generated visual, annotated screenshot, layout study, state storyboard, or executable interaction spike. Use the cheapest artifact that resolves the current uncertainty.
+- Do not use image generation as a substitute for interaction design or engineering. A bitmap cannot prove resizing, scrolling, focus, animation, data lifecycle, or task continuity.
+- Freeze a **visual, interaction, and implementation contract** before broad implementation. If feasibility is uncertain, build a narrow spike first and then revise the artifact.
+- Treat the newest user-approved artifact as authoritative. User instructions about preserved shell, navigation, brand, behavior, or scope override imagery.
+- Preserve product truth. No invented business data, fake actions, decorative controls, or impossible capabilities. Every visible control maps to a real handler/route, a truthful disabled/read-only state, or removal.
+- When information architecture changes, rewrite the owning component boundary. Do not preserve an obsolete DOM tree and attempt to disguise it with CSS.
+- Do not let live content destroy the composition. Design and verify normal, minimum, maximum, empty, loading, error, and long-content cases. Summaries may clamp only when the full content remains accessible.
+- For multi-panel workspaces, define ownership of width, scroll, focus, and collapse. Avoid independent fixed widths and absolute overlays competing for the same canvas.
+- Motion must explain state, hierarchy, continuity, or causality. Specify trigger, duration class, property, interruption behavior, and reduced-motion fallback. Do not add ambient motion merely to appear premium.
+- Do not claim completion from a mockup, component preview, typecheck, or build. Verify the real route and real representative data in a browser.
+- Do not close while the parity ledger contains FAIL, UNKNOWN, or unchecked items unless the result is explicitly reported as incomplete.
+
+## Choose the Right Design Evidence
+
+Use one or more artifacts based on the risk:
+
+- **Static visual artifact:** hierarchy, typography, material, density, and macro composition.
+- **State storyboard:** loading, progressive work, populated, empty, error, failed, completed, collapsed, and alternate-tab behavior.
+- **Annotated spatial study:** panel min/preferred/max widths, scroll owners, resize/collapse rules, overlays, and first-viewport budget.
+- **Executable spike:** novel interactions, complex motion, virtualized or resizable panes, canvas behavior, or uncertain framework feasibility.
+
+Do not spend time polishing a high-fidelity image while the key interaction or spatial model is unresolved.
 
 ## Workflow
 
-1. **Frame the brief**
-   - Identify product type, target user, page job, key workflows, and what must stay from the existing UI.
-   - Classify the surface: operator console, SaaS dashboard, creative workspace, landing page, mobile tool, game, etc.
-   - Read existing design rules and nearby pages before generating a design.
+### 1. Establish product truth
 
-2. **Generate or select the design**
-   - If no suitable design exists, use imagegen to produce a high-fidelity UI mockup.
-   - Include exact viewport, app context, visible modules, density, palette, typography, real labels, and constraints.
-   - Read `references/imagegen-brief.md` when composing the prompt.
-   - Save or cite the generated image path in the work log/final response.
+- Read repository instructions, design-system rules, tokens, and nearby product surfaces.
+- Open the current route and capture its normal state plus any reachable loading, empty, error, populated, terminal, and alternate-tab states.
+- Identify the target user, page job, primary workflow, decision points, important content, and what must remain familiar.
+- Inventory real data sources, handlers, routes, uploads/media, persistence, background lifecycles, and external dependencies.
+- State the observed problem and the first bad boundary: product model, shell, component tree, CSS cascade, data contract, interaction state, route, or rendered DOM.
 
-3. **Freeze a design contract**
-   - Before editing code, write a short implementation contract in the working notes or update:
-     - Page shell and grid, including whether the old global shell/sidebar/topbar must be replaced for this route.
-     - Module list in visual order.
-     - Fixed dimensions and density targets: sidebar width, topbar height, first-row height, card heights, primary column widths, and which modules must be visible in the first viewport.
-   - Key states and interactions.
-   - Data lifecycle: persisted source of truth, first-entry behavior when records are missing, loading/generating/error states, manual refresh/update behavior, and which UI areas must remain empty instead of showing mock content.
-   - Visual tokens: background, border, radius, spacing, accent colors.
-   - Must-remove old modules and must-preserve existing behavior.
-   - Protected chrome: list any existing sidebar/topbar/shared navigation the user said not to change.
-   - Supersession rule: name which artifact is authoritative when more than one screenshot or mockup exists.
-   - Read `references/design-contract.md` for the checklist.
-   - Read `references/parity-ledger.md` and create the ledger before editing.
+### 2. Define experience strategy
 
-4. **Map design to code**
-   - Locate the owning route/component and the style source that actually renders the page.
-   - Create a module-to-code mapping table:
-     - Design module.
-     - Existing component/CSS selector.
-     - Action: reuse, rewrite, remove, or create.
-     - Verification selector or visible text.
-   - If the design changes layout semantics, change JSX/HTML first; CSS-only work is insufficient.
-   - Include shell-level rows in the mapping table: old sidebar, old topbar, page wrapper, route owner, and shared layout classes. A redesign that leaves the old shell visible has failed unless the contract explicitly preserves it.
-   - Include data-source rows in the mapping table for every visible business field: API/table/source, first-entry missing-data behavior, generation trigger, refresh trigger, and fallback text. A visible mock value without a source is a failed mapping.
-   - Include semantics in the mapping table: table vs. card grid, right rail vs. inline section, top filters vs. profile strip, fixed-width sidebar vs. inherited nav.
-   - Include control-shape rows for visual controls: checkbox vs. pill, icon+text vs. text-only, brand/platform mark vs. generic initial, single-slot preview vs. file list, disabled state vs. hidden action.
+- Choose the product archetype: creative workspace, operator console, editorial tool, dashboard, consumer flow, landing page, or another justified model.
+- Write the hierarchy in plain language: what dominates, what supports, what stays peripheral, and what changes by task stage.
+- Define spatial choreography: fixed vs. elastic regions, panel priority, min/preferred/max widths, collapse behavior, scroll ownership, and focus mode.
+- Define interaction choreography: entry, selection, creation, progress, interruption, completion, failure, recovery, and return paths.
+- Identify where motion materially improves orientation or causality.
+- Read [references/experience-quality.md](references/experience-quality.md) and reject generic or structurally weak directions before generating polish.
 
-5. **Implement by module**
-   - Replace old structure at the shared owner, not only the nearest visible call site.
-   - Keep styles scoped to the page or established design-system classes.
-   - Reuse existing data and handlers where behavior is unchanged.
-   - Wire every visible business control to a real action, navigation, disabled/loading state, or explicit read-only treatment. Do not leave generated-plan, refresh, evidence-update, filter, or view-more controls as inert visual elements.
-   - Remove or neutralize old CSS selectors that still force old cards, grids, banners, hidden rails, or oversized sections.
-   - Keep one visual system across modules: same border weight, radius, title density, field density, chips, buttons, and status colors.
-   - Work through the parity ledger, not through vague page areas. After each major module, update PASS/FAIL status with the selector or screenshot evidence that proves it matches the contract.
+### 3. Pass the feasibility gate
 
-6. **Verify in browser**
-   - Run the narrowest compile/test checks for touched files.
-   - Start or reuse a local server, then capture desktop and mobile screenshots. If a server cannot run, state why and use the best available fallback.
-   - Use DOM metrics, not just eyeballing, for:
-     - `scrollWidth === clientWidth` or no unintended horizontal overflow.
-     - Key modules visible in intended viewport.
-     - Old selector count is zero for removed structures.
-     - Primary buttons/tabs/inputs are accessible and clickable.
-     - Macro contract counts match: number of top filters, stage columns, matrix rows, action items, and bottom cards.
-     - Protected shell selectors and dimensions are unchanged when the user asked to keep existing navigation/chrome.
-     - Missing-data, generated-data, persisted-data, and manual-refresh states use real API/table behavior rather than mock content.
-     - Each parity ledger row has a PASS/FAIL status and evidence.
-   - Read `references/verification.md` for concrete checks.
+For every important visible module and control, map:
 
-7. **Iterate against the design**
-   - Compare screenshot to design module-by-module.
-   - Fix largest structural mismatch first, then density, then polish.
-   - If implementation must deviate from the design, state the reason and update the design contract.
-   - When a screenshot comparison shows the old navigation, old page chrome, old card rhythm, or unclamped live data, return to component-tree/layout changes. Do not treat those as CSS polish.
-   - If the rendered page still visually resembles the old implementation more than the artifact, mark the verification as failed and continue from the owning component or shell.
-   - Run a final "user-complaint simulation": list the top 5 things the user would likely call out as "not like the design" and verify each against the screenshot/DOM before final.
+- Real source of content and source of truth.
+- Existing or required handler, navigation, persistence, and lifecycle ownership.
+- Expected content extremes and media behavior.
+- Framework/component reuse, rewrite boundary, and likely performance risk.
+- Honest fallback if a dependency or capability is unavailable.
 
-## Root-Cause Pattern For Redesign Bugs
+Build a narrow executable spike before freezing high fidelity when the design depends on uncertain resizing, drag/drop, canvas, animation, virtualization, media processing, streaming, or background-task behavior. Read [references/implementation-feasibility.md](references/implementation-feasibility.md).
 
-When the user reports visual mismatch, state these before editing:
+### 4. Create and freeze the design contract
+
+- Prefer a supplied or approved design source. If one is absent and a visual exploration is useful, use image generation and read [references/imagegen-brief.md](references/imagegen-brief.md).
+- Generate or select only directions that respect the feasibility map and real content. Do not ask an image model to invent product capabilities.
+- Freeze the approved artifact, viewport(s), shell, module order, hierarchy, typography, materials, spatial rules, state storyboard, interaction details, motion rules, data/action contracts, and old structures to remove.
+- Record explicit deviations from the artifact where browser behavior, real content, accessibility, or platform constraints require them.
+- Read [references/design-contract.md](references/design-contract.md) and create the parity ledger from [references/parity-ledger.md](references/parity-ledger.md).
+
+### 5. Map the contract to code
+
+Locate the route and the first component/style/state boundary that owns the behavior. Map every contract item to:
+
+- Existing owner and selector.
+- Reuse, rewrite, remove, create, or rewire action.
+- Data source and handler/lifecycle owner.
+- State and content cases.
+- Verification selector, geometry, screenshot region, interaction, or runtime evidence.
+
+Include shared shell, route wrapper, old selectors, scroll containers, portals/overlays, focus management, and background lifecycles. Fix repeated layout smells at their shared abstraction rather than in each page.
+
+### 6. Implement in truthful vertical slices
+
+- Establish tokens and macro shell first: viewport budget, grid/flex constraints, `min-width: 0`, scroll ownership, layer strategy, and typography scale.
+- Implement the primary workflow through one complete real state before multiplying visual modules.
+- Add remaining states and modules using real data/handlers. Preserve existing behavior unless the contract explicitly changes it.
+- Keep visual and interaction state separate from business lifecycle state when collapsing, dismissing, switching tabs, or leaving the viewport must not cancel work.
+- Use semantic structure and accessible native behavior before custom interaction abstractions.
+- Make motion interruptible and state-driven. Prefer transform/opacity for frequent animation; avoid unnecessary layout thrashing and permanent `will-change`.
+- Scope route-specific styles, remove obsolete competing selectors, and avoid specificity escalation as a repair strategy.
+- Use established components and tokens where they strengthen coherence; do not force a generic design system component where it destroys the intended hierarchy.
+- Update the ledger with evidence after each stable slice. Commit/checkpoint at meaningful, runnable stages when the repository workflow requires it.
+
+### 7. Verify the real experience
+
+- Run the narrowest relevant static checks, then exercise the real application boundary.
+- Verify representative desktop widths specified by the product. Verify mobile only when mobile is in scope; never invent a mobile requirement for a desktop-only product.
+- Exercise primary interactions and state transitions, not just initial render.
+- Capture the target view and compare it module-by-module with the artifact. Use DOM geometry for spatial claims and screenshots for visual claims.
+- Check long text, dense content, empty/loading/error states, media failure, focus/keyboard behavior, reduced motion, overflow, resize/collapse, and stale/old DOM removal.
+- Inspect console/network/runtime errors and gather proportionate performance evidence for expensive media, motion, lists, or canvases.
+- Read [references/verification.md](references/verification.md). Fix the largest structural or behavioral mismatch before color and micro-polish.
+
+### 8. Run the quality challenge
+
+Before completion, challenge the result from four angles:
+
+- **User:** Can I understand the page, complete the primary job, recover from failure, and read real content without fighting the layout?
+- **Designer:** Is the hierarchy intentional and distinctive, or is it a generic card farm with fashionable decoration?
+- **Engineer:** Are component boundaries, state ownership, CSS, rendering cost, and fallback behavior sustainable?
+- **Skeptic:** Which five visible or interactive issues would make the user say “it still looks the same,” “this is cramped,” or “this button is fake”?
+
+Continue if any answer exposes a contract failure. Update the contract if a justified implementation discovery changes the design.
+
+## Root-Cause Pattern for Redesign Failures
+
+Before editing a reported mismatch, state:
 
 - Observed symptom.
-- First bad layer or boundary where behavior becomes wrong.
+- First bad layer or boundary.
 - Suspected root cause.
-- Why it surfaced now.
-- Whether the change is a root-cause fix or a symptom patch.
+- Why it surfaced in this state or viewport.
+- Whether the proposed change fixes the contract/owner or only patches the symptom.
 
-Common first bad layers:
-
-- Design contract missing: no frozen module list, so implementation drifted.
-- Component tree wrong: old card/grid/rail still renders.
-- CSS cascade wrong: new styles added but old selectors win.
-- Data/route wrong: code changed a different page, state, tab, or mode.
-- Verification wrong: screenshot captured loading state, stale build, wrong viewport, or old dev server.
-- Optional integration wrong: optional service or executor auto-runs and steals the default flow.
-- Parity ledger missing: small but important design controls were never listed, so the user had to identify them manually.
-- Data contract missing: the mockup invented values/actions and implementation shipped them as fake business UI.
+Frequent root causes include an unexamined shared shell, fixed widths competing with an overlay, a wrong scroll owner, visual state coupled to task lifecycle, old selectors winning the cascade, fake mockup content, missing extreme-content states, a screenshot from the wrong route/build, and an artifact that was never feasible with the product's actual data or handlers.
 
 ## Completion Standard
 
-Final response must include:
+The final report must include:
 
-- Design artifact path or design source.
-- Root cause if this was a mismatch/fix request.
-- What changed structurally and visually.
-- Verification run, including screenshot/browser checks.
-- Parity ledger summary: total rows, PASS rows, any unresolved FAIL/UNKNOWN rows.
-- Residual risk, especially blocked visual checks or known unrelated build failures.
+- Approved design source and any state/spatial/interaction artifacts.
+- Root cause for redesign fixes.
+- Structural, interaction, visual, motion, and engineering changes.
+- Real route and data states verified, target viewport(s), screenshots, DOM/interaction/runtime evidence, and relevant checks.
+- Parity ledger totals with zero unreported FAIL/UNKNOWN rows.
+- Explicit deviations from the artifact and why they improve truth, usability, accessibility, performance, or feasibility.
+- Deployment/integration state when requested, plus residual risks and owner/next action for blockers.
 
-Do not say "matches the design" unless a real rendered screenshot was compared against the design contract.
+Do not say “matches the design,” “production-ready,” or “complete” unless the rendered application and its important states satisfy the contract.

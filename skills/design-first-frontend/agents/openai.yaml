@@ -1,7 +1,7 @@
 interface:
   display_name: "Design-First Frontend"
-  short_description: "Imagegen-led frontend design-to-code workflow"
-  default_prompt: "Use $design-first-frontend to redesign this page with an imagegen mockup first, then implement and verify against it."
+  short_description: "Design and ship feasible, high-fidelity frontend experiences"
+  default_prompt: "Use $design-first-frontend to redesign and ship this experience from product truth through visual, interaction, implementation, and real-browser verification."
 
 policy:
   allow_implicit_invocation: true

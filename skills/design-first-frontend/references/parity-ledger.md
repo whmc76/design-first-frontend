@@ -1,62 +1,76 @@
 # Parity Ledger
 
-Use this file to prevent the user from doing module-by-module QA manually.
+The ledger prevents the user from becoming the implementation's manual diff tool. It covers appearance, behavior, product truth, and engineering evidence.
 
-## Before Coding
-
-Create a ledger from the design artifact and current page.
+## Ledger Format
 
 ```markdown
-| # | Design requirement | Current implementation | Required action | Evidence selector/check | Status |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Platform choices use brand mark + square checkbox | text-only tile | rewrite JSX and CSS | `.creator-platform-mark` count = 8; `.creator-platform-checkbox` count = 8 | TODO |
-| 2 | Non-music asset type is one preview/replace slot | middle file list remains | remove middle list from DOM | `.creator-assets-layout.single-slot`; `.creator-asset-focus .creator-asset-row` count = 0 | TODO |
+| # | Type | Contract requirement | Current implementation | Required action | Evidence | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | spatial | work canvas keeps usable width while chat focuses | fixed columns squeeze canvas | rewrite shared grid constraints | geometry at target and boundary widths | TODO |
+| 2 | lifecycle | collapsing monitor does not cancel live task | dismiss clears task id | split presentation/lifecycle state | collapse, finish, expand; terminal result visible | TODO |
 ```
 
-## Required Columns
+Allowed statuses: `TODO`, `PASS`, `FAIL`, `BLOCKED`. Avoid “mostly,” “close,” or unproved PASS.
 
-- **Design requirement**: concrete visible requirement, not "make nicer".
-- **Current implementation**: what exists now and why it mismatches.
-- **Required action**: reuse, rewrite, remove, create, rewire data, or preserve.
-- **Evidence selector/check**: DOM selector, text check, count, style metric, screenshot region, API check, or interaction.
-- **Status**: TODO, PASS, FAIL, BLOCKED. Avoid "mostly".
+## Required Coverage
 
-## What Must Get A Row
+Add rows for every relevant category:
 
-- Shell/sidebar/topbar/page chrome when visible in the artifact.
-- Every major module in visual order.
-- Every important control shape: checkbox, segmented control, icon button, upload button, tab, status chip, filter, preview, table row.
-- Every required icon/media mark: brand icons, relationship icons, thumbnails, avatars, uploaded asset previews.
-- Every layout semantic: table, timeline, card grid, right rail, split pane, single-slot preview, multi-item list.
-- Every data-backed value or action: generated plan, refresh button, save action, upload, delete, selected state, first-entry missing-data behavior.
-- Every old module that must disappear.
+- **Structure:** route, shell, sidebar/topbar, module order, semantics, scroll owners, overlays/portals, old DOM removal.
+- **Spatial:** region min/preferred/max behavior, first-viewport budget, resize transitions, collapse/focus, overflow, reading width.
+- **Visual:** typography roles, layer/material model, color/status, borders/radii, icons/media, density, selected/focus/disabled styling.
+- **Content/data:** real source, representative/extreme lengths, counts, empty/loading/error, persistence/readback, media failure.
+- **Interaction:** every primary control, keyboard/focus, selection, uploads, tabs, disclosure, cancellation, recovery, alternate paths.
+- **Lifecycle:** progressive/background state, restoration, terminal completion/failure, unmount/navigation cleanup.
+- **Motion:** meaningful transitions, interruptibility, state consistency, reduced-motion outcome.
+- **Performance/accessibility:** only risks materially introduced or affected by the redesign.
+- **Removal/compatibility:** superseded selectors, routes, modals, fake controls, stale defaults, and preserved behavior.
 
-## PASS Rules
+## Evidence Rules
 
-A row is PASS only when there is evidence:
+A row is PASS only with evidence appropriate to its claim:
 
-- DOM selector/count confirms the structure.
-- Screenshot confirms visible placement and density.
-- Style metric confirms size/position when relevant.
-- Interaction test confirms the control works or is correctly disabled.
-- API/database check confirms generated/persisted business data where applicable.
+- DOM selector/count for structure and removal.
+- Bounding boxes/computed styles for geometry.
+- Screenshot region or visual comparison for composition/material/typography.
+- Real interaction result for actions and state changes.
+- API/database/log/network evidence for data lifecycle when relevant.
+- Keyboard/focus/accessibility-tree or semantic evidence for accessibility claims.
+- Trace/profiler/bundle/network/runtime observation for material performance claims.
+- Reduced-motion emulation or deterministic style/state evidence for motion fallback.
 
-## FAIL Rules
+One piece of evidence may support several rows when it directly proves each claim. Do not add meaningless evidence just to increase counts.
 
-Mark FAIL and keep working when:
+## Automatic FAIL Conditions
 
-- The old DOM still exists but is hidden behind CSS.
-- The design uses an icon/control shape and the implementation uses plain text.
-- A single-slot design is implemented as a file list.
-- A table/timeline/right rail is replaced with generic cards.
-- A button has no real action, route, disabled state, or read-only explanation.
-- Live data stretches the page so the first viewport no longer matches the design.
-- The screenshot is from a loading state, stale server, or wrong route.
+Mark FAIL and continue when:
 
-## Final Summary Format
+- Old structure remains and competes with or contaminates the new surface.
+- A visible control is inert, fake, or wired to a mock-only success path.
+- The static design is matched by breaking real data, lifecycle, focus, or accessibility.
+- A multi-panel layout overlaps, starves the dominant region, or creates unreachable content at a scoped viewport.
+- Long text/media/error/loading/restored states destroy hierarchy or usability.
+- Visual state such as collapse/dismiss accidentally changes business lifecycle.
+- The screenshot comes from a stale server, wrong route, wrong state, or component-only preview when the real route is available.
+- Motion delays work, cannot be interrupted, causes large repeated layout cost, or ignores reduced motion.
+- A shared fix is duplicated as page-specific patches and still fails on sibling surfaces in scope.
+
+## Contract Deviations
+
+If implementation intentionally differs from a bitmap:
+
+1. Record the artifact expectation.
+2. Record the real constraint or discovery.
+3. Update the design contract.
+4. Verify the improved behavior.
+
+Mark PASS against the updated contract, not against an impossible screenshot. Undocumented visual drift remains FAIL.
+
+## Final Summary
 
 ```text
-Parity ledger: 18 rows, 18 PASS, 0 FAIL, 0 UNKNOWN.
-Key evidence: platform mark count 8, checkbox count 8, old asset list count 0, no horizontal overflow, screenshot saved at ...
+Parity ledger: 32 rows — 32 PASS, 0 FAIL, 0 BLOCKED.
+Coverage: structure 6, spatial 5, visual 7, content/data 4, interaction/lifecycle 7, motion/a11y/performance 3.
+Key evidence: target and boundary screenshots, canvas minimum width, no horizontal overflow, old overlay count 0, real action flow, collapse-to-terminal restoration, keyboard focus return, reduced-motion state.
 ```
-

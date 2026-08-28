@@ -1,7 +1,7 @@
 {
   "name": "design-first-frontend",
-  "version": "0.1.0",
-  "description": "Skill-only Codex plugin for imagegen-led frontend design-to-code implementation.",
+  "version": "0.2.0",
+  "description": "Skill-only Codex plugin for evidence-based production frontend redesign and verification.",
   "author": {
     "name": "Cyber Dick Lang",
     "email": "286878701@qq.com",
@@ -15,21 +15,22 @@
     "skill",
     "frontend",
     "design-first",
-    "imagegen"
+    "redesign",
+    "verification"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Design-First Frontend",
-    "shortDescription": "Imagegen-led frontend mockup-to-code workflow.",
-    "longDescription": "Design-First Frontend enforces a design artifact, implementation contract, parity ledger, module mapping, and screenshot/DOM verification before a frontend redesign is considered complete.",
+    "shortDescription": "Evidence-based production frontend redesign workflow.",
+    "longDescription": "Design-First Frontend turns a redesign into a buildable visual, interaction, and implementation contract, then verifies the real route with representative data, browser evidence, and a parity ledger.",
     "developerName": "Cyber Dick Lang",
     "category": "Productivity",
     "capabilities": [
       "Write"
     ],
     "defaultPrompt": [
-      "Use design-first frontend to redesign this page from a mockup.",
-      "Generate a UI design first, then implement it faithfully."
+      "Use design-first frontend to redesign this page as a production experience.",
+      "Define the visual, interaction, and implementation contract, then implement and verify the real route."
     ]
   }
 }

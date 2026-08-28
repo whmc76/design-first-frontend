@@ -1,16 +1,18 @@
 # Design-First Frontend
 
-Skill-only Codex plugin for imagegen-led frontend redesigns and faithful mockup-to-code implementation.
+Skill-only Codex plugin for evidence-based production frontend redesigns, implementation, and browser verification.
 
 Author: Cyber Dick Lang ([whmc76](https://github.com/whmc76))
 
 ## What It Does
 
-- Requires a design artifact before implementation unless explicitly skipped.
-- Freezes a design contract before code changes.
-- Creates a parity ledger for every visible module, control, icon, layout role, and data-backed action.
-- Verifies visual fidelity with browser screenshots, DOM counts, selector checks, and user-complaint simulation.
-- Blocks final completion while parity rows are failed, unknown, or unchecked.
+- Establishes product truth from the current route, owning code, real data, handlers, and shared-shell constraints.
+- Defines spatial and interaction choreography before broad implementation.
+- Passes important modules and controls through an implementation-feasibility gate.
+- Freezes a visual, interaction, and implementation contract before broad code changes.
+- Uses truthful vertical slices instead of decorative controls or invented product capabilities.
+- Verifies the real route with representative states, browser screenshots, DOM geometry, interactions, and runtime evidence.
+- Blocks completion while the parity ledger contains failed, unknown, or unchecked rows.
 
 ## Install Locally
 
@@ -39,8 +41,8 @@ skills/design-first-frontend
 ## Validate
 
 ```powershell
-python C:\Users\28687\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py .
-python C:\Users\28687\.codex\skills\.system\skill-creator\scripts\quick_validate.py .\skills\design-first-frontend
+python -X utf8 "$env:USERPROFILE\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py" .
+python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .\skills\design-first-frontend
 ```
 
 ## License

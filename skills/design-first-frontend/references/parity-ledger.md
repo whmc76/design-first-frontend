@@ -5,10 +5,10 @@ The ledger prevents the user from becoming the implementation's manual diff tool
 ## Ledger Format
 
 ```markdown
-| # | Type | Contract requirement | Current implementation | Required action | Evidence | Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 | spatial | work canvas keeps usable width while chat focuses | fixed columns squeeze canvas | rewrite shared grid constraints | geometry at target and boundary widths | TODO |
-| 2 | lifecycle | collapsing monitor does not cancel live task | dismiss clears task id | split presentation/lifecycle state | collapse, finish, expand; terminal result visible | TODO |
+| # | Coverage ID | Artifact ID | Type | Contract requirement | Current implementation | Required action | Evidence | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | C-01 | A-01 | spatial | work canvas keeps usable width while chat focuses | fixed columns squeeze canvas | rewrite shared grid constraints | geometry at target and boundary widths | TODO |
+| 2 | C-02 | A-03 | lifecycle | collapsing monitor does not cancel live task | dismiss clears task id | split presentation/lifecycle state | collapse, finish, expand; terminal result visible | TODO |
 ```
 
 Allowed statuses: `TODO`, `PASS`, `FAIL`, `BLOCKED`. Avoid “mostly,” “close,” or unproved PASS.
@@ -17,6 +17,7 @@ Allowed statuses: `TODO`, `PASS`, `FAIL`, `BLOCKED`. Avoid “mostly,” “clos
 
 Add rows for every relevant category:
 
+- **Experience coverage:** every scoped route/view/mode/template family, critical journey step, structurally different state, overlay, and viewport maps to its governing artifact and implementation evidence.
 - **Structure:** route, shell, sidebar/topbar, module order, semantics, scroll owners, overlays/portals, old DOM removal.
 - **Spatial:** region min/preferred/max behavior, first-viewport budget, resize transitions, collapse/focus, overflow, reading width.
 - **Visual:** typography roles, layer/material model, color/status, borders/radii, icons/media, density, selected/focus/disabled styling.
@@ -46,6 +47,8 @@ One piece of evidence may support several rows when it directly proves each clai
 
 Mark FAIL and continue when:
 
+- A scoped coverage unit has no approved artifact/evidence, is represented only by an unreadable contact sheet, or silently inherits design decisions from an unrelated screen.
+- Approved artifacts contradict each other on shared shell, navigation, tokens, hierarchy, or task continuity without a documented per-surface reason.
 - Old structure remains and competes with or contaminates the new surface.
 - A visible control is inert, fake, or wired to a mock-only success path.
 - The static design is matched by breaking real data, lifecycle, focus, or accessibility.
@@ -70,7 +73,9 @@ Mark PASS against the updated contract, not against an impossible screenshot. Un
 ## Final Summary
 
 ```text
-Parity ledger: 32 rows — 32 PASS, 0 FAIL, 0 BLOCKED.
-Coverage: structure 6, spatial 5, visual 7, content/data 4, interaction/lifecycle 7, motion/a11y/performance 3.
-Key evidence: target and boundary screenshots, canvas minimum width, no horizontal overflow, old overlay count 0, real action flow, collapse-to-terminal restoration, keyboard focus return, reduced-motion state.
+Experience coverage: 9 rows — 9 approved, 9 implemented, 9 verified, 0 planned, 0 blocked.
+Artifact set: 5 authoritative sources — system frame A-01, screens A-02/A-03, storyboard A-04, boundary frame A-05.
+Parity ledger: 38 rows — 38 PASS, 0 FAIL, 0 BLOCKED.
+Coverage: experience 6, structure 6, spatial 5, visual 7, content/data 4, interaction/lifecycle 7, motion/a11y/performance 3.
+Key evidence: per-artifact screenshots, route/view transition replay, target and boundary geometry, no horizontal overflow, old overlay count 0, real action flow, collapse-to-terminal restoration, keyboard focus return, reduced-motion state.
 ```

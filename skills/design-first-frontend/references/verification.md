@@ -1,11 +1,12 @@
 # Browser Verification
 
-Verify the real experience, not merely the compiled component. Scale the checks to the risk, but never omit the primary route, primary workflow, or scoped viewport behavior.
+Verify the real experience, not merely the compiled component. Scale the checks to the risk, but never omit a required experience-coverage unit, primary journey, or scoped viewport behavior.
 
 ## 1. Runtime Preflight
 
 - Confirm the exact checkout/branch/commit and server/container serving the page.
 - Confirm route, product mode, authentication/session, data fixture or real representative record, and feature flags.
+- Confirm the coverage ID, governing artifact ID, shared shell/template family, and expected entry/return path for each verification run.
 - Reload or restart enough of the runtime to rule out stale HMR, cache, or bind-mount output.
 - Capture console and network/runtime errors relevant to the flow.
 
@@ -55,9 +56,12 @@ Exercise the relevant states with real or repository-approved representative dat
 
 Confirm the hierarchy, actions, scroll, and content access remain coherent in each. Do not replace unavailable real states with invented business content.
 
+Map every exercised state back to the experience coverage matrix. If a state reveals a structurally different surface or action hierarchy that was not planned, reopen the coverage and design gates instead of treating it as implementation polish.
+
 ## 4. Interaction and Lifecycle
 
 - Exercise every changed primary control and representative secondary controls.
+- Traverse representative navigation between covered routes/views/modes and verify selected navigation, shell continuity, task context, back/return behavior, and preserved work.
 - Verify default, hover, pressed, selected, disabled, loading, and error behavior where applicable.
 - Verify keyboard entry/order/activation, visible focus, focus containment only for real modals, and focus return after transient UI closes.
 - Verify route/back/refresh/restoration behavior and persistence when the workflow requires it.
@@ -86,7 +90,7 @@ Use existing project budgets when available. Do not invent universal thresholds 
 
 ## 7. Visual Comparison
 
-Compare implementation and artifact by region in this order:
+For every artifact ID in the approved set, capture its mapped coverage units at the authoritative state and viewport. Compare implementation and artifact by region in this order:
 
 1. Shell, dominant object, columns, and first-viewport allocation.
 2. Module order, semantics, and state.
@@ -96,6 +100,8 @@ Compare implementation and artifact by region in this order:
 
 Use image overlay/diff tooling when available, but interpret differences rather than optimizing a meaningless global pixel score. Dynamic content, browser font rendering, and documented feasibility/accessibility deviations may be legitimate.
 
+Review the artifact set side by side for cross-surface continuity. A page can match its own frame and still fail if shell geometry, navigation, tokens, or task progression contradict sibling screens.
+
 ## 8. False Positives
 
 - Screenshot captured Suspense/loading rather than the intended state.
@@ -103,6 +109,7 @@ Use image overlay/diff tooling when available, but interpret differences rather 
 - CSS HMR updated while component or server state did not.
 - Browser zoom or OS scaling changed geometry.
 - Component preview passed while the shared shell still overrides it.
+- One polished route passed while sibling routes, nested modes, overlays, or structurally different states in the coverage matrix were never captured.
 - Mock handlers made controls appear functional.
 - Hidden old DOM still affects focus, accessibility, scroll, or lifecycle.
 
@@ -117,5 +124,6 @@ Answer with evidence:
 - Does panel focus/collapse/resize preserve the primary canvas?
 - Does motion clarify change without delaying work or harming reduced-motion users?
 - Did the redesign introduce avoidable rendering, media, dependency, or maintenance cost?
+- Does every scoped coverage row have approved design evidence and verified runtime evidence, with consistent shared decisions across the artifact set?
 
 If an answer is weak, continue or report the exact blocker and incomplete state.

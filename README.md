@@ -1,17 +1,20 @@
 # Design-First Frontend
 
-Skill-only Codex plugin for evidence-based production frontend redesigns, implementation, and browser verification.
+Skill-only Codex plugin for evidence-based multi-surface frontend redesigns, implementation, and browser verification.
 
 Author: Cyber Dick Lang ([whmc76](https://github.com/whmc76))
 
 ## What It Does
 
-- Establishes product truth from the current route, owning code, real data, handlers, and shared-shell constraints.
+- Establishes product truth across scoped routes, views, modes, nested flows, real data, handlers, and shared-shell constraints.
+- Builds an experience coverage matrix before polished design so one attractive screen cannot stand in for an uncovered product.
+- Groups the surface graph into meaningful template/state coverage units without generating every possible permutation.
+- Produces a coherent, numbered artifact set for shared shells, distinct screens, critical workflows, overlays, states, and structural breakpoints.
 - Defines spatial and interaction choreography before broad implementation.
 - Passes important modules and controls through an implementation-feasibility gate.
 - Freezes a visual, interaction, and implementation contract before broad code changes.
 - Uses truthful vertical slices instead of decorative controls or invented product capabilities.
-- Verifies the real route with representative states, browser screenshots, DOM geometry, interactions, and runtime evidence.
+- Verifies every scoped coverage unit against its governing artifact with browser screenshots, DOM geometry, interactions, and runtime evidence.
 - Blocks completion while the parity ledger contains failed, unknown, or unchecked rows.
 
 ## Install Locally

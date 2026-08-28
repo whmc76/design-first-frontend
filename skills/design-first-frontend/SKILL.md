@@ -1,6 +1,6 @@
 ---
 name: design-first-frontend
-description: Design and ship production frontend redesigns from an evidence-based visual and interaction contract. Use for page, workspace, shell, or module redesigns where aesthetic quality, spatial behavior, motion, real data/actions, implementation feasibility, and browser fidelity all matter. Also use when a screenshot implementation still feels like the old page or looks good but does not work.
+description: Design and ship production frontend redesigns from an evidence-based visual, interaction, and multi-surface contract. Use for pages, multi-route products, workspaces, shells, or modules where cross-view continuity, spatial behavior, motion, real data/actions, implementation feasibility, and browser fidelity all matter. Also use when one mockup cannot cover the product, a screenshot implementation still feels like the old page, or a design looks good but does not work.
 ---
 
 # Design-First Frontend
@@ -19,27 +19,30 @@ A successful result must be all of the following:
 - **Spatially stable:** panels negotiate available space; important content does not become unusably narrow, overlap, or disappear during resize and state changes.
 - **Performant and accessible:** motion, media, rendering, keyboard/focus, contrast, and reduced-motion behavior are proportionate to the product.
 - **Buildable:** the visual contract maps to real components, handlers, data sources, assets, and an affordable implementation strategy.
+- **Coverage-complete:** every scoped route, view, mode, critical state, and structural breakpoint is represented by approved design evidence or an explicit scope decision.
 - **Verified:** the actual route is exercised in a real browser and compared against the contract with screenshots, DOM geometry, interactions, and runtime evidence.
 
 ## Non-Negotiables
 
-- Inspect the existing route in a browser and inspect its owning code before proposing a redesign. A screenshot alone does not reveal real states, content extremes, handlers, or shared-shell constraints.
-- Create a design artifact before broad implementation. It may be a supplied mockup, generated visual, annotated screenshot, layout study, state storyboard, or executable interaction spike. Use the cheapest artifact that resolves the current uncertainty.
+- Inspect the scoped surface graph in a browser and inspect its owning code before proposing a redesign. One route or screenshot does not reveal sibling views, nested modes, state transitions, handlers, or shared-shell constraints.
+- Create an experience coverage matrix and the required artifact set before broad implementation. Use the fewest artifacts that cover every distinct structural, interaction, state, and viewport decision—not one artifact by default and not every possible permutation.
+- A single design frame is valid only for an explicitly single-surface scope with no important alternate route, mode, step, overlay, or state requiring a different visual decision.
 - Do not use image generation as a substitute for interaction design or engineering. A bitmap cannot prove resizing, scrolling, focus, animation, data lifecycle, or task continuity.
 - Freeze a **visual, interaction, and implementation contract** before broad implementation. If feasibility is uncertain, build a narrow spike first and then revise the artifact.
-- Treat the newest user-approved artifact as authoritative. User instructions about preserved shell, navigation, brand, behavior, or scope override imagery.
+- Treat the newest approved artifact for each coverage row as authoritative. User instructions about preserved shell, navigation, brand, behavior, or scope override imagery.
 - Preserve product truth. No invented business data, fake actions, decorative controls, or impossible capabilities. Every visible control maps to a real handler/route, a truthful disabled/read-only state, or removal.
 - When information architecture changes, rewrite the owning component boundary. Do not preserve an obsolete DOM tree and attempt to disguise it with CSS.
 - Do not let live content destroy the composition. Design and verify normal, minimum, maximum, empty, loading, error, and long-content cases. Summaries may clamp only when the full content remains accessible.
 - For multi-panel workspaces, define ownership of width, scroll, focus, and collapse. Avoid independent fixed widths and absolute overlays competing for the same canvas.
 - Motion must explain state, hierarchy, continuity, or causality. Specify trigger, duration class, property, interruption behavior, and reduced-motion fallback. Do not add ambient motion merely to appear premium.
 - Do not claim completion from a mockup, component preview, typecheck, or build. Verify the real route and real representative data in a browser.
-- Do not close while the parity ledger contains FAIL, UNKNOWN, or unchecked items unless the result is explicitly reported as incomplete.
+- Do not close while experience coverage contains unexplained, `PLANNED`, or `BLOCKED` rows, or while the parity ledger contains `TODO`, `FAIL`, `BLOCKED`, or unchecked items, unless the result is explicitly reported as incomplete.
 
 ## Choose the Right Design Evidence
 
 Use one or more artifacts based on the risk:
 
+- **Surface graph and coverage matrix:** routes, views, modes, nested flows, states, breakpoints, template families, and the artifact that governs each coverage unit.
 - **Static visual artifact:** hierarchy, typography, material, density, and macro composition.
 - **State storyboard:** loading, progressive work, populated, empty, error, failed, completed, collapsed, and alternate-tab behavior.
 - **Annotated spatial study:** panel min/preferred/max widths, scroll owners, resize/collapse rules, overlays, and first-viewport budget.
@@ -52,15 +55,17 @@ Do not spend time polishing a high-fidelity image while the key interaction or s
 ### 1. Establish product truth
 
 - Read repository instructions, design-system rules, tokens, and nearby product surfaces.
-- Open the current route and capture its normal state plus any reachable loading, empty, error, populated, terminal, and alternate-tab states.
+- Traverse every scoped route, view, mode, nested flow, and important return path. Capture representative normal, loading, empty, error, populated, terminal, overlay, and alternate-tab states.
 - Identify the target user, page job, primary workflow, decision points, important content, and what must remain familiar.
 - Inventory real data sources, handlers, routes, uploads/media, persistence, background lifecycles, and external dependencies.
+- Read [references/experience-coverage.md](references/experience-coverage.md) and create the surface graph plus experience coverage matrix before choosing polished artifacts.
 - State the observed problem and the first bad boundary: product model, shell, component tree, CSS cascade, data contract, interaction state, route, or rendered DOM.
 
 ### 2. Define experience strategy
 
 - Choose the product archetype: creative workspace, operator console, editorial tool, dashboard, consumer flow, landing page, or another justified model.
 - Write the hierarchy in plain language: what dominates, what supports, what stays peripheral, and what changes by task stage.
+- Group scoped surfaces into shared shells and structurally distinct template families; state which decisions must remain continuous across them.
 - Define spatial choreography: fixed vs. elastic regions, panel priority, min/preferred/max widths, collapse behavior, scroll ownership, and focus mode.
 - Define interaction choreography: entry, selection, creation, progress, interruption, completion, failure, recovery, and return paths.
 - Identify where motion materially improves orientation or causality.
@@ -68,7 +73,7 @@ Do not spend time polishing a high-fidelity image while the key interaction or s
 
 ### 3. Pass the feasibility gate
 
-For every important visible module and control, map:
+For every coverage unit, important visible module, and control, map:
 
 - Real source of content and source of truth.
 - Existing or required handler, navigation, persistence, and lifecycle ownership.
@@ -80,15 +85,15 @@ Build a narrow executable spike before freezing high fidelity when the design de
 
 ### 4. Create and freeze the design contract
 
-- Prefer a supplied or approved design source. If one is absent and a visual exploration is useful, use image generation and read [references/imagegen-brief.md](references/imagegen-brief.md).
-- Generate or select only directions that respect the feasibility map and real content. Do not ask an image model to invent product capabilities.
-- Freeze the approved artifact, viewport(s), shell, module order, hierarchy, typography, materials, spatial rules, state storyboard, interaction details, motion rules, data/action contracts, and old structures to remove.
+- Prefer supplied or approved design sources. If they do not cover the matrix and visual exploration is useful, use image generation and read [references/imagegen-brief.md](references/imagegen-brief.md).
+- Plan stable artifact IDs and generate or select a coherent artifact set that covers the matrix. Preserve the approved system frame across dependent screens; do not ask an image model to invent product capabilities.
+- Freeze the approved artifact set, coverage mapping, viewport(s), shell, module order, hierarchy, typography, materials, spatial rules, state storyboards, interaction details, motion rules, data/action contracts, and old structures to remove.
 - Record explicit deviations from the artifact where browser behavior, real content, accessibility, or platform constraints require them.
 - Read [references/design-contract.md](references/design-contract.md) and create the parity ledger from [references/parity-ledger.md](references/parity-ledger.md).
 
 ### 5. Map the contract to code
 
-Locate the route and the first component/style/state boundary that owns the behavior. Map every contract item to:
+Locate each covered route/view and the first shared or local component/style/state boundary that owns its behavior. Map every contract item to:
 
 - Existing owner and selector.
 - Reuse, rewrite, remove, create, or rewire action.
@@ -101,8 +106,8 @@ Include shared shell, route wrapper, old selectors, scroll containers, portals/o
 ### 6. Implement in truthful vertical slices
 
 - Establish tokens and macro shell first: viewport budget, grid/flex constraints, `min-width: 0`, scroll ownership, layer strategy, and typography scale.
-- Implement the primary workflow through one complete real state before multiplying visual modules.
-- Add remaining states and modules using real data/handlers. Preserve existing behavior unless the contract explicitly changes it.
+- Implement the primary workflow through one complete real state, then complete coverage units in dependency order: shared shell, template families, nested flows, critical states, and scoped breakpoints.
+- Add remaining covered states and modules using real data/handlers. Preserve existing behavior unless the contract explicitly changes it.
 - Keep visual and interaction state separate from business lifecycle state when collapsing, dismissing, switching tabs, or leaving the viewport must not cancel work.
 - Use semantic structure and accessible native behavior before custom interaction abstractions.
 - Make motion interruptible and state-driven. Prefer transform/opacity for frequent animation; avoid unnecessary layout thrashing and permanent `will-change`.
@@ -114,8 +119,8 @@ Include shared shell, route wrapper, old selectors, scroll containers, portals/o
 
 - Run the narrowest relevant static checks, then exercise the real application boundary.
 - Verify representative desktop widths specified by the product. Verify mobile only when mobile is in scope; never invent a mobile requirement for a desktop-only product.
-- Exercise primary interactions and state transitions, not just initial render.
-- Capture the target view and compare it module-by-module with the artifact. Use DOM geometry for spatial claims and screenshots for visual claims.
+- Exercise primary journeys, route/view transitions, nested modes, and state transitions—not just the initial render.
+- Capture every required coverage unit and compare it module-by-module with its governing artifact ID. Use DOM geometry for spatial claims and screenshots for visual claims.
 - Check long text, dense content, empty/loading/error states, media failure, focus/keyboard behavior, reduced motion, overflow, resize/collapse, and stale/old DOM removal.
 - Inspect console/network/runtime errors and gather proportionate performance evidence for expensive media, motion, lists, or canvases.
 - Read [references/verification.md](references/verification.md). Fix the largest structural or behavioral mismatch before color and micro-polish.
@@ -148,10 +153,11 @@ Frequent root causes include an unexamined shared shell, fixed widths competing 
 The final report must include:
 
 - Approved design source and any state/spatial/interaction artifacts.
+- Experience coverage totals by route/view/template/state/viewport, artifact IDs, and zero unexplained, `PLANNED`, or `BLOCKED` rows.
 - Root cause for redesign fixes.
 - Structural, interaction, visual, motion, and engineering changes.
-- Real route and data states verified, target viewport(s), screenshots, DOM/interaction/runtime evidence, and relevant checks.
-- Parity ledger totals with zero unreported FAIL/UNKNOWN rows.
+- Real routes/views and data states verified, target viewport(s), screenshots, DOM/interaction/runtime evidence, and relevant checks.
+- Parity ledger totals with zero unreported `TODO`, `FAIL`, or `BLOCKED` rows.
 - Explicit deviations from the artifact and why they improve truth, usability, accessibility, performance, or feasibility.
 - Deployment/integration state when requested, plus residual risks and owner/next action for blockers.
 

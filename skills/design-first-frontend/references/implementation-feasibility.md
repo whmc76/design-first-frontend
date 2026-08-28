@@ -4,12 +4,12 @@ Use this reference before freezing a high-fidelity direction and when mapping th
 
 ## Feasibility Map
 
-Create one row per important module, action, and state:
+Create one row per experience coverage unit and important module, action, and state:
 
 ```markdown
-| Requirement | Real data/source | Handler/lifecycle | Existing owner | Build strategy | Main risk | Fallback | Verification |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Collapse live monitor | task snapshot + local presentation state | collapse must not release task | shared provider | split lifecycle and presentation state | terminal event lost while collapsed | persistent compact status | collapse, complete task, restore terminal UI |
+| Coverage/artifact | Requirement | Real data/source | Handler/lifecycle | Existing owner | Build strategy | Main risk | Fallback | Verification |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| C-02 / A-03 | Collapse live monitor | task snapshot + local presentation state | collapse must not release task | shared provider | split lifecycle and presentation state | terminal event lost while collapsed | persistent compact status | collapse, complete task, restore terminal UI |
 ```
 
 Do not approve a direction while a primary capability has an unknown source, owner, handler, or fallback.
@@ -33,6 +33,7 @@ The spike should prove the riskiest invariant with representative content. It is
 ### Ownership
 
 - Identify the route owner, shell owner, business source of truth, presentation owner, and lifecycle owner.
+- Map shared owners and route-local owners across the experience coverage matrix so sibling surfaces do not reimplement the same shell, state, or navigation contract.
 - Keep ephemeral visual state separate from persistent or background business state.
 - Fix common sizing, overlay, scroll, and state problems at the shared owner when multiple surfaces reproduce them.
 - Avoid moving feature state into a generic global context merely to make a layout convenient.
@@ -98,6 +99,7 @@ This order is guidance, not permission to ignore repository-specific workflow.
 
 Before broad implementation, verify:
 
+- Every approved coverage unit and artifact has a feasible owner/build strategy, or is explicitly blocked before design freeze.
 - Primary workflow has real data and handlers.
 - Important states have owners and truthful UI.
 - Spatial rules are expressible in the current shell without overlap or unusable content widths.

@@ -1,7 +1,7 @@
 interface:
   display_name: "Design-First Frontend"
-  short_description: "Design and ship feasible, high-fidelity frontend experiences"
-  default_prompt: "Use $design-first-frontend to redesign and ship this experience from product truth through visual, interaction, implementation, and real-browser verification."
+  short_description: "Multi-surface frontend design and delivery"
+  default_prompt: "Use $design-first-frontend to map this product's route, view, state, and viewport coverage, create a coherent artifact set, then implement and verify every scoped surface."
 
 policy:
   allow_implicit_invocation: true

@@ -1,10 +1,12 @@
-# Design-First Frontend
+# Design-First Studio
 
-Skill-only Codex plugin for evidence-based multi-surface frontend redesigns, implementation, and browser verification.
+Codex plugin containing focused, evidence-based workflows for multi-surface frontend redesign and video/graphic visual production.
 
 Author: Cyber Dick Lang ([whmc76](https://github.com/whmc76))
 
-## What It Does
+## Included Skills
+
+### `design-first-frontend`
 
 - Establishes product truth across scoped routes, views, modes, nested flows, real data, handlers, and shared-shell constraints.
 - Builds an experience coverage matrix before polished design so one attractive screen cannot stand in for an uncovered product.
@@ -15,7 +17,16 @@ Author: Cyber Dick Lang ([whmc76](https://github.com/whmc76))
 - Freezes a visual, interaction, and implementation contract before broad code changes.
 - Uses truthful vertical slices instead of decorative controls or invented product capabilities.
 - Verifies every scoped coverage unit against its governing artifact with browser screenshots, DOM geometry, interactions, and runtime evidence.
-- Blocks completion while the parity ledger contains failed, unknown, or unchecked rows.
+- Blocks completion while experience coverage or parity rows remain unresolved.
+
+### `design-first-visual-production`
+
+- Designs program, series, channel, campaign, and editorial visual systems rather than isolated hero frames.
+- Covers openers, stings, transitions, lower thirds, subtitles/captions, bugs, end cards, thumbnails, posters, key art, social adaptations, and other scoped applications.
+- Builds a creative coverage matrix so the required styleframes, storyboards, motion proofs, graphic masters, and output samples are defined before production.
+- Separates accessible captions from decorative typography and verifies representative footage, long copy, languages, small previews, and platform overlays.
+- Defines motion/audio grammar, editable template behavior, asset provenance/rights, production pipeline, and the real delivery matrix.
+- Verifies actual still exports, motion renders, caption outputs, adaptations, and handoff sources before completion.
 
 ## Install Locally
 
@@ -35,10 +46,11 @@ codex plugin add .
 
 Start a new Codex thread after installation so the skill list is refreshed.
 
-## Skill Path
+## Skill Paths
 
 ```text
 skills/design-first-frontend
+skills/design-first-visual-production
 ```
 
 ## Validate
@@ -46,6 +58,7 @@ skills/design-first-frontend
 ```powershell
 python -X utf8 "$env:USERPROFILE\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py" .
 python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .\skills\design-first-frontend
+python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .\skills\design-first-visual-production
 ```
 
 ## License

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design-First Visual Production"
+  short_description: "Video packaging and graphic systems"
+  default_prompt: "Use $design-first-visual-production to build a coherent video and graphic package with coverage, styleframes, typography, motion, subtitles, and verified delivery outputs."
+
+policy:
+  allow_implicit_invocation: true

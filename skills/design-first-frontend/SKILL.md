@@ -1,6 +1,6 @@
 ---
 name: design-first-frontend
-description: Design and ship production frontend redesigns from an evidence-based visual, interaction, and multi-surface contract. Use for pages, multi-route products, workspaces, shells, or modules where cross-view continuity, spatial behavior, motion, real data/actions, implementation feasibility, and browser fidelity all matter. Also use when one mockup cannot cover the product, a screenshot implementation still feels like the old page, or a design looks good but does not work.
+description: Design and ship production frontend redesigns from an evidence-based visual, interaction, and multi-surface contract. Use for pages, multi-route products, workspaces, shells, or modules where cross-view continuity, spatial behavior, motion, real data/actions, implementation feasibility, and browser fidelity all matter. Also use when one mockup cannot cover the product, a screenshot implementation still feels like the old page, or a design looks good but does not work. Do not use for pure video or graphic packages; use $design-first-visual-production.
 ---
 
 # Design-First Frontend
@@ -8,6 +8,12 @@ description: Design and ship production frontend redesigns from an evidence-base
 Turn a redesign request into a production experience, not a decorative mockup. The design contract includes layout, content behavior, interaction states, motion, data/actions, engineering constraints, and verification evidence. A beautiful image that cannot survive real content or be implemented faithfully is a failed design.
 
 The goal is to reduce the user's design and QA burden. The user should not have to discover obvious layout, state, control, responsiveness, or implementation mismatches one at a time.
+
+## Medium Boundary
+
+- Use this skill for interactive application/browser surfaces, routes, controls, responsive layout, data/actions, and runtime behavior.
+- Use `$design-first-visual-production` for program/channel identity, video packaging, title sequences, transitions, subtitles/captions, lower thirds, thumbnails, posters, key art, social adaptations, and other non-interactive graphic systems.
+- For mixed products, share one approved brand source of truth. This skill owns interactive behavior and browser verification; `$design-first-visual-production` owns media, timeline, subtitle, packaging, and delivery contracts.
 
 ## Outcome Standard
 

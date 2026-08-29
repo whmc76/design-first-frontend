@@ -1,7 +1,7 @@
 {
   "name": "design-first-frontend",
-  "version": "0.3.0",
-  "description": "Skill-only Codex plugin for evidence-based multi-surface frontend redesign and verification.",
+  "version": "0.4.0",
+  "description": "Codex skills for evidence-based frontend redesign and visual production across video and graphics.",
   "author": {
     "name": "Cyber Dick Lang",
     "email": "286878701@qq.com",
@@ -17,13 +17,15 @@
     "design-first",
     "redesign",
     "multi-surface",
-    "verification"
+    "verification",
+    "video-packaging",
+    "graphic-design"
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Design-First Frontend",
-    "shortDescription": "Multi-surface production frontend redesign workflow.",
-    "longDescription": "Design-First Frontend maps routes, views, modes, states, and breakpoints into a coverage-driven artifact set, then implements and verifies the real product against its visual, interaction, and engineering contract.",
+    "displayName": "Design-First Studio",
+    "shortDescription": "Frontend, video packaging, and graphic production.",
+    "longDescription": "Design-First Studio provides focused skills for multi-surface frontend redesign and for coherent video/graphic packages covering identity, styleframes, typography, subtitles, motion, production feasibility, delivery specifications, and verification.",
     "developerName": "Cyber Dick Lang",
     "category": "Productivity",
     "capabilities": [
@@ -31,7 +33,7 @@
     ],
     "defaultPrompt": [
       "Use design-first frontend to redesign this multi-page product as a coherent production experience.",
-      "Map the route/view/state coverage, create the required artifact set, then implement and verify every scoped surface."
+      "Use design-first visual production to create a coherent program identity, video package, subtitle system, and graphic adaptations."
     ]
   }
 }
